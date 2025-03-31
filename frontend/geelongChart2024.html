@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geelong 2024 Season Points</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      
+      var allData = [
+        ['Round', 'Points'],
+        ['1', 80],
+        ['2', 95],
+        ['3', 102],
+        ['4', 88],
+        ['5', 110],
+        ['6', 99],
+        ['7', 120],
+        ['8', 85],
+        ['9', 100],
+        ['10', 105],
+        ['11', 98],
+        ['12', 115],
+        ['13', 90],
+        ['14', 107],
+        ['15', 123],
+        ['16', 111],
+        ['17', 97],
+        ['18', 104],
+        ['19', 108],
+        ['20', 92],
+        ['21', 101],
+        ['22', 117],
+        ['23', 109]
+      ];
+      
+      function drawChart(roundLimit = allData.length - 1) {
+        var data = google.visualization.arrayToDataTable(allData.slice(0, roundLimit + 1));
+
+        var options = {
+          title: 'Geelong Points Scored - 2024 Season',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          hAxis: { title: 'Round' },
+          vAxis: { title: 'Points Scored' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+        chart.draw(data, options);
+      }
+
+      function updateChart() {
+        var roundLimit = document.getElementById('roundSlider').value;
+        drawChart(parseInt(roundLimit));
+      }
+    </script>
+    <style>
+      body {
+        text-align: center;
+        font-family: Arial, sans-serif;
+      }
+      .chart-container {
+        width: 900px;
+        margin: auto;
+      }
+      .slider-container {
+        text-align: center;
+        margin-top: 20px;
+      }
+      .back-button {
+        margin-top: 20px;
+        padding: 10px 15px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #0073e6;
+        color: white;
+        border: none;
+        border-radius: 5px;
+      }
+      .back-button:hover {
+        background-color: #005bb5;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Geelong 2024 Season Points</h2>
+    <div class="chart-container">
+      <div id="curve_chart" style="width: 900px; height: 500px"></div>
+    </div>
+    <div class="slider-container">
+      <input type="range" id="roundSlider" min="1" max="23" value="23" oninput="updateChart()">
+      <span id="sliderValue">23</span>
+    </div>
+    <button class="back-button" onclick="location.href='index.html'">Back to Home</button>
+
+    <script>
+      document.getElementById('roundSlider').addEventListener('input', function() {
+        document.getElementById('sliderValue').innerText = this.value;
+      });
+    </script>
+  </body>
+</html>
