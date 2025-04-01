@@ -47,8 +47,8 @@ df_git['match_id'] = df_git.apply(lambda row: (row['year'], row['round_num'], tu
 
 df_merged = pd.merge(df_git, df_kaggle, how= 'left')
 
-df_merged = df_merged.drop(columns=['match_id', 'Unnamed: 0', 'team1', 'round', 'team2', 'goals_team1','goals_team2','behinds_team1',
-'behinds_team2','score_team1','score_team2'])
+# df_merged = df_merged.drop(columns=['match_id', 'Unnamed: 0', 'team1', 'round', 'team2', 'goals_team1','goals_team2','behinds_team1',
+# 'behinds_team2','score_team1','score_team2'])
 
 
 df_merged = df_merged.rename(columns={
@@ -72,6 +72,8 @@ df_merged = df_merged.rename(columns={
     'team_2_final_goals': 'team2_final_goals',
     'team_2_final_behinds': 'team2_final_behinds'
 })
-
+df_merged['team1_score'] = 6 * df_merged['team1_final_goals'] + df_merged['team1_final_behinds']
+df_merged['team2_score'] = 6 * df_merged['team2_final_goals'] + df_merged['team2_final_behinds']
+df_merged[df_merged['team1_score'].isna()].to_csv("aa.csv")
 df_merged.to_csv("backend/data/merged_data.csv")
 print("data cleaned and merged!")
